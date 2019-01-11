@@ -1,13 +1,8 @@
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 //This implementation will support both time based and limit based caching
@@ -32,64 +27,52 @@ public class DelayCache {
 
 
 class Cache<K,T> {
-	final Calendar startDateTime;
-	final Map<K,CacheEntry<T>> cacheMap;
-	final TimeUnit timeUnit;
-	final long delay;
-	final int size;
+	private final Map<K,CacheEntry<T>> cacheMap;
+	private final TimeUnit timeUnit;
+	private final long delay;
+	private final int size;
 	Cache(int size,TimeUnit timeUnit,long delay){
-		this.startDateTime = Calendar.getInstance();
 		this.cacheMap = new ConcurrentHashMap<>(size);
 		this.timeUnit = timeUnit;
 		this.delay = delay;
 		this.size=size;
-		Thread t = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
+		Thread t = new Thread(()-> {
 				while(true){
 					invalidateOldElements();
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-			}
 		});
+		t.setDaemon(true);
 		t.start();
 		
 	}
 	
-	void putBlock(K key,T element) throws InterruptedException{
+	void putBlock(K key,T element){
 		while(cacheMap.size()>=size){
 			invalidateOldElements();
-			Thread.sleep(1000);
 		}
-//		System.out.println(key);
-		cacheMap.put(key,new CacheEntry(element));
+		cacheMap.put(key,new CacheEntry<T>(element));
+		System.out.println(key+" added");
 	}
 	
-	boolean tryPut(K key,T element) throws InterruptedException{
+	boolean tryPut(K key,T element) {
 		if(cacheMap.size()>=size)
 			invalidateOldElements();
 		if(cacheMap.size()>=size) return false;
 		else
-			cacheMap.put(key,new CacheEntry(element));
+			cacheMap.put(key,new CacheEntry<T>(element));
 		return true;
 	}
 
-	int getCurrentSize(){
+	private int getCurrentSize(){
 		return cacheMap.size();
 	}
-	void invalidateOldElements(){
-		Set<K> keys = cacheMap.keySet();
-		Iterator<K> iterator = keys.iterator();
-		while(iterator.hasNext()){
-			CacheEntry<T> data = cacheMap.get(iterator.next());
-			if(data.isDelayed()) iterator.remove();
-		}
+	private void invalidateOldElements(){
+		cacheMap.entrySet().removeIf(a->a.getValue().isDelayed());
 	}
 	
 	
@@ -102,15 +85,18 @@ class Cache<K,T> {
 		return data;
 	}
 	class CacheEntry<T>{
+
 		T data;
-		Calendar elementCreationTime;
-		public CacheEntry(T data) {
+		LocalDateTime dateTime;
+		private CacheEntry(T data) {
 			this.data = data;
-			elementCreationTime=Calendar.getInstance();
+			dateTime = LocalDateTime.now();
 		}
 		boolean isDelayed(){
-			long difference=timeUnit.convert(Calendar.getInstance().getTimeInMillis()-elementCreationTime.getTimeInMillis(),TimeUnit.MILLISECONDS);
-			return (difference-delay)>0;
+
+			long checkHowOld= Duration.between(dateTime,LocalDateTime.now()).getSeconds() - timeUnit.toSeconds(delay);
+
+			return (checkHowOld)>0;
 			
 		}
 		T getDataPart(){
@@ -120,19 +106,6 @@ class Cache<K,T> {
 		
 	}
 
-
-
-	
-	public void run() {
-		while(true){
-			invalidateOldElements();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 	
 }
 
