@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -57,5 +58,27 @@ class MYLRU<K,V>{
 			System.out.println(myLRU.get(key));
 		}
 	}
-	
+
+
+	class LRUCache<K,V>{
+		int capacity;
+
+
+	}
+
+	class LRUNode<K,V>{
+		K key;
+		V value;
+		LRUNode pre;
+		LRUNode next;
+
+		public LRUNode(K key, V value) {
+			this.key = key;
+			this.value = value;
+		}
+
+
+	}
+
+
 }

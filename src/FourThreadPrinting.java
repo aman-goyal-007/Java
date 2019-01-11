@@ -30,14 +30,16 @@ class MyThread{
 
 class NumberPrinting implements Runnable{
 	int sharedNumber=0;
-	volatile int currentAccess=0;
 	List<Thread> myThreadList;
 	final int size;
+	Object lock = new Object();
 	AtomicInteger index = new AtomicInteger(0);
+
 	public NumberPrinting(int size) {
 		this.size=size;
 		myThreadList = new ArrayList<Thread>(this.size);
 	}
+
 	public void addToList(Thread t){
 		myThreadList.add(t);
 	}
@@ -45,14 +47,12 @@ class NumberPrinting implements Runnable{
 	public  void run() {
 		try{
 			while(true){
-				Thread.sleep(200);
-				Thread threadFromList = myThreadList.get(index.get());
-				synchronized(threadFromList){
-					//System.out.println(" Aman : "+threadFromList+","+index.get()+","+Thread.currentThread().getName());
-					if(threadFromList.getName().equals(Thread.currentThread().getName())){
+				synchronized(lock){
+					Thread threadFromList = myThreadList.get(index.get());
+					if(threadFromList.equals(Thread.currentThread())){
 						System.out.println(Thread.currentThread().getName()+","+sharedNumber++);
-						index.getAndIncrement();
-						if(index.get()>=size) index.set(0);
+						if(index.incrementAndGet()>=size)
+						  index.set(0);
 					}
 				}
 			}
