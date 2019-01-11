@@ -9,25 +9,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-class Aman implements Runnable{
-
-	@Override
-	public void run() {
-		throw new NullPointerException("Hehe");
-		
-	}
-	
-}
-
 
 
 public class UncaughtHandler {
-	public static void main(String...args) throws IOException, ClassNotFoundException{
-/*		ExecutorService pool = Executors.newFixedThreadPool(10);
-		pool.submit(new Aman());
-		pool.shutdown();
-*/
-//		CustomThreadFactory pool = new 	CustomThreadFactory(new MyUncaughtExceptionHandler());
+	public static void main(String...args) {
 	Thread t = new Thread(new Aman());
 	t.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
 		
@@ -70,21 +55,14 @@ public class UncaughtHandler {
 	
 	}
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+class Aman implements Runnable{
+
+	@Override
+	public void run() {
+		throw new NullPointerException("Hehe");
+
+	}
+
+}
+

@@ -1,14 +1,5 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Queue;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SortHashmapByValues {
 
@@ -30,9 +21,9 @@ public class SortHashmapByValues {
 }
 class MyComparator implements Comparator<Integer>{
 
-	HashMap<Integer, String> map;
+	private Map<Integer, String> map;
 	
-	public MyComparator(HashMap<Integer, String> map) {
+	MyComparator(Map<Integer, String> map) {
 		this.map = map;
 	}
 	@Override

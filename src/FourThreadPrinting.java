@@ -29,18 +29,18 @@ class MyThread{
 }
 
 class NumberPrinting implements Runnable{
-	int sharedNumber=0;
-	List<Thread> myThreadList;
-	final int size;
-	Object lock = new Object();
-	AtomicInteger index = new AtomicInteger(0);
+	private int sharedNumber=0;
+	private List<Thread> myThreadList;
+	private final int size;
+	private Object lock = new Object();
+	private AtomicInteger index = new AtomicInteger(0);
 
-	public NumberPrinting(int size) {
+	NumberPrinting(int size) {
 		this.size=size;
-		myThreadList = new ArrayList<Thread>(this.size);
+		myThreadList = new ArrayList<>(this.size);
 	}
 
-	public void addToList(Thread t){
+	void addToList(Thread t){
 		myThreadList.add(t);
 	}
 	@Override
