@@ -19,14 +19,6 @@ public class DynamicProxy {
 	
 }
 
-
-
-
-
-
-
-
-
 interface MyInterface {
 
 	void method();

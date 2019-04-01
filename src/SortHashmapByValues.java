@@ -13,7 +13,7 @@ public class SortHashmapByValues {
 		TreeMap<Integer, String> treeMap = new TreeMap<>(comparator);
 		treeMap.putAll(map);
 
-		Set<Entry<Integer, String>> set=treeMap.entrySet();
+		Set<Entry<Integer, String>> set = treeMap.entrySet();
 		for(Entry e:set)
 			System.out.println(e.getValue());
 	}
