@@ -1,83 +1,133 @@
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class LRU {
 	
 	public static void main(String...args){
-		MYLRU<Integer,String> myLRU = new MYLRU(2);
+		MYLRU<Integer,String> myLRU = new MYLRU(3);
 		myLRU.put(1, "One");
-		myLRU.printLRU();
 		myLRU.put(2, "Two");
-		myLRU.printLRU();
 		myLRU.put(3, "Three");
-		myLRU.printLRU();
-		myLRU.getObject(3);
+		System.out.println(myLRU.getNode(2));
 		myLRU.put(4, "Four");
-		myLRU.printLRU();
-		
+		System.out.println(myLRU.getNode(1));
+		System.out.println(myLRU.getNode(2));
+		myLRU.put(5, "Five");
+		System.out.println(myLRU.getNode(2));
+
 	}
 
 }
 
 class MYLRU<K,V>{
-	Map<K, V> myLRU;
+	Map<K, Node<K,V>> myLRU;
+	Node start,end;
 	final int MAXSIZE;
 	MYLRU(int size){
-		myLRU = new LinkedHashMap<>(size);
 		MAXSIZE=size;
+		myLRU = new HashMap<>(MAXSIZE);
+	}
+
+	public V getNode(K key){
+		if(myLRU.containsKey(key)){
+			Node node = myLRU.get(key);
+			removeNode(node);
+			addAtTop(node);
+			return (V)node.getValue();
+		}else{
+			return null;
+		}
 	}
 	
-	void put(K key,V value){
-		
-		if(myLRU.size()>=MAXSIZE){
-			removeLeastRecentUsed();
-		}
-		myLRU.put(key, value);
-	}
-	void removeLeastRecentUsed(){
-		if(!myLRU.isEmpty())
-			myLRU.remove(myLRU.keySet().iterator().next());
-	}
-	
-	V getObject(K key){
-		V v=null;
-		if((v=myLRU.get(key)) != null){
-			if(myLRU.size()>=MAXSIZE)
-				removeLeastRecentUsed();
-			myLRU.remove(key);
-			myLRU.put(key, v);
-		}
-		return v;
-	}
-	void printLRU(){
-		System.out.println("---------------------------");
-		Set<K> keys=myLRU.keySet();
-		for(K key:keys){
-			System.out.println(myLRU.get(key));
+	public void put(K key, V value){
+		if(myLRU.containsKey(key)){
+			Node node = myLRU.get(key);
+			node.setValue(node.getValue());
+			removeNode(node);
+			addAtTop(node);
+
+		}else{
+			Node newNode = new Node();
+			newNode.setKey(key);
+			newNode.setValue(value);
+			if(myLRU.size()==MAXSIZE){
+				myLRU.remove(end.getKey());
+				removeNode(end);
+			}
+
+			addAtTop(newNode);
+			myLRU.put(key, newNode);
 		}
 	}
 
-
-	class LRUCache<K,V>{
-		int capacity;
-
-
+	private void addAtTop(Node node){
+		node.setRight(start);
+		node.setLeft(null);
+		if(start !=null){
+			start.setLeft(node);
+		}
+		start = node;
+		if(end == null){
+			end = node;
+		}
 	}
 
-	class LRUNode<K,V>{
+	private void removeNode(Node deleteNode){
+		if(deleteNode.getLeft()!=null){
+			deleteNode.getLeft().setRight(null) ;
+		}else{
+			start = deleteNode.getRight();
+		}
+
+		if(deleteNode.getRight()!=null){
+			deleteNode.getRight().setLeft(null);
+		}else{
+			end = deleteNode.getLeft();
+		}
+	}
+
+
+
+
+
+
+	private class Node<K,V>{
 		K key;
 		V value;
-		LRUNode pre;
-		LRUNode next;
+		Node left;
+		Node right;
 
-		public LRUNode(K key, V value) {
+		public K getKey() {
+			return key;
+		}
+
+		public void setKey(K key) {
 			this.key = key;
+		}
+
+		public V getValue() {
+			return value;
+		}
+
+		public void setValue(V value) {
 			this.value = value;
 		}
 
+		public Node getLeft() {
+			return left;
+		}
 
+		public void setLeft(Node left) {
+			this.left = left;
+		}
+
+		public Node getRight() {
+			return right;
+		}
+
+		public void setRight(Node right) {
+			this.right = right;
+		}
 	}
 
 
