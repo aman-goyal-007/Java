@@ -1,5 +1,6 @@
 package designpattern.customlogger;
 
+// Chain of responsibility
 public class UseLogger {
     public static void main(String[] args) {
         ErrorLogger errorLogger = new ErrorLogger(LogLevel.ERROR);

@@ -1,62 +1,68 @@
 
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
-interface Pool {
 
-	void execute(Runnable r);
-}
+public class CustomThreadPool {
 
-public class CustomThreadPool implements Pool{
-
-	private BlockingQueue<Runnable> queue;
-	private final int MAXPOOLSIZE;
-	private AtomicInteger current = new AtomicInteger(0);
-	private volatile boolean isShutdown=false;
-
-	private CustomThreadPool(){
-		MAXPOOLSIZE = 1;
-	}
+	private final LinkedBlockingQueue<Runnable> queue;
+	private final int poolSize;
+	private final Worker[] workers;
+	private volatile boolean isShutdown = false;
 
 	public CustomThreadPool(int poolSize) {
-		MAXPOOLSIZE=poolSize;
-		queue=new LinkedBlockingQueue<>(MAXPOOLSIZE);
-	}
-	
-	@Override
-	public void execute(Runnable r) {
-			try {
-				if(current.get()!=MAXPOOLSIZE)
-				{
-					new Worker(queue).start();
-					current.incrementAndGet();
-				}
-				queue.put(r);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-	}
-	
-	public void shutdown(){
-		isShutdown=true;
-	}
-	
-	class Worker extends Thread{
-		BlockingQueue<Runnable> queue;
-		
-		Worker(BlockingQueue<Runnable> queue){
-			this.queue=queue;
+		this.poolSize = poolSize;
+		queue = new LinkedBlockingQueue<>();
+		workers = new Worker[poolSize];
+		for(int i=0;i<poolSize;i++){
+			workers[i] = new Worker();
+			workers[i].start();
 		}
+	}
+	
+	public void execute(Runnable task) {
+		if(!isShutdown) {
+			synchronized (queue) {
+				queue.add(task);
+				queue.notify();
+			}
+		}
+	}
+
+
+	public void shutdown(){
+		isShutdown = true;
+		/*while(true) {
+			while (!queue.isEmpty()) {
+			}
+
+			for(int i=0;i<poolSize;i++){
+				workers[i].interrupt();
+
+			}
+		}*/
+	}
+
+	private class Worker extends Thread{
+
 		public void run(){
-			while(true && !isShutdown){
-				try{
-					queue.take().run();
+			Runnable task;
+			while(!isShutdown) {
+				synchronized (queue) {
+					while (queue.isEmpty()) {
+						try {
+							queue.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
 					System.out.println(Thread.currentThread().getName());
-					
-				}catch(Exception e){
-					e.printStackTrace();
+					task = queue.poll();
+				}
+
+				try {
+					task.run();
+				} catch (Exception e) {
 				}
 			}
 		}

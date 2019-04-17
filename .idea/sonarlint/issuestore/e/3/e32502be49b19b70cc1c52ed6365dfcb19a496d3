@@ -1,0 +1,17 @@
+
+[squid:UselessImportCheck"2Remove this unused import 'java.util.Collections'.(¢³ïÓþÿÿÿÿ
+usquid:S2293Z"YReplace the type specification in this constructor call with the diamond operator ("<>").(óæøÄüÿÿÿÿ
+bsquid:CommentedOutCodeLine)"<This block of commented-out lines of code should be removed.(³¼äÐ
+ksquid:S00100I"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ó¹Ð™ùÿÿÿÿ
+usquid:S2293S"YReplace the type specification in this constructor call with the diamond operator ("<>").(ª¦Ô¯þÿÿÿÿ
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(˜¿è¬ûÿÿÿÿ
+squid:S1186g"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(“ˆþ‚üÿÿÿÿ
+1squid:S1220""Move this file to a named package.
+T
+squid:S106c"9Replace this use of System.out or System.err by a logger.(¥—œÎùÿÿÿÿ
+squid:S1186@"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(”ŸÃòÿÿÿÿÿ
+bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íì¡’
+ksquid:S00100g"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ˆþ‚üÿÿÿÿ
+squid:S11861"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(—°Ç†þÿÿÿÿ
+O
+squid:S106&"9Replace this use of System.out or System.err by a logger.(åØðþ

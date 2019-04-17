@@ -1,0 +1,17 @@
+
+vsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(šôî³úÿÿÿÿ8Ôìé„-
+rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¬Ò†É
+Xsquid:S1854"5Remove this useless assignment to local variable "b".(•ê®Áùÿÿÿÿ8É¸Öˆ-
+[
+squid:S106"9Replace this use of System.out or System.err by a logger.(ìø‰úÿÿÿÿ8ÛâÕˆ-
+\squid:S3400"9Remove this method and declare a constant for this value.(¼Ğşÿÿÿÿ8Ä‰×Õˆ-
+Xsquid:S1161+":Add the "@Override" annotation above this method signature(ïÏß‰8şâ×Õˆ-
+V
+squid:S106#"9Replace this use of System.out or System.err by a logger.(ƒˆÜİ8Ö÷âÕˆ-
+[
+squid:S106"9Replace this use of System.out or System.err by a logger.(èÊºÁøÿÿÿÿ8„õàÕˆ-
+Gsquid:S2387("$"x" is the name of a field in "One".(¦«À¢ùÿÿÿÿ8ƒÕÕˆ-
+[
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ç¢³ñüÿÿÿÿ8´ÂâÕˆ-
+Isquid:S1481"&Remove this unused "b" local variable.(•ê®Áùÿÿÿÿ8É¸Öˆ-
+psquid:ModifiersOrderCheck""EReorder the modifiers to comply with the Java Language Specification.(ó»Ûi8‚µìé„-
