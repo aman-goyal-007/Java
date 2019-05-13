@@ -1,13 +1,0 @@
-
-Fsquid:S1148,"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8…°šãƒ-
-dsquid:UnusedPrivateMethodF"3Remove this unused private "getCurrentSize" method.(ÔİÛúÿÿÿÿ8½Ë¬ãƒ-
-U
-squid:S106:"9Replace this use of System.out or System.err by a logger.(½—º8É…–ãƒ-
-dsquid:S2142+"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8…°šãƒ-
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(Åüñÿÿÿÿÿ
-O
-squid:S106"9Replace this use of System.out or System.err by a logger.(ŒÛÜƒ
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(Ïªÿ§ùÿÿÿÿ
-?squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ

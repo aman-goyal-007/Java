@@ -1,13 +1,0 @@
-
-Xsquid:UselessImportCheck"4Remove this unused import 'java.io.FileInputStream'.(˜³ÉÓ
-Xsquid:UselessImportCheck"5Remove this unused import 'java.io.FileOutputStream'.(˜«ªg
-Msquid:UselessImportCheck")Remove this unused import 'java.io.File'.(†Ð¥Å
-`squid:UselessImportCheck"7Remove this unused import 'java.io.ObjectOutputStream'.(é»Óºûÿÿÿÿ
-`squid:UselessImportCheck"0Remove this unused import 'java.io.IOException'.(ªº»Úýÿÿÿÿ8€í äƒ-
-T
-squid:S1062"9Replace this use of System.out or System.err by a logger.(ûýõÇþÿÿÿÿ
-O
-squid:S106"9Replace this use of System.out or System.err by a logger.(ùõá€
-?squid:S1604"(Make this anonymous inner class a lambda(þºíâ
-qsquid:UselessImportCheck"ARemove this unused import 'java.util.concurrent.ExecutorService'.(æ÷–£ùÿÿÿÿ8Ùø£äƒ-
-Zsquid:UselessImportCheck"6Remove this unused import 'java.io.ObjectInputStream'.(Éæéœ

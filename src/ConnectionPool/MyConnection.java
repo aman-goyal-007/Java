@@ -30,19 +30,17 @@ public class MyConnection implements Connection{
 
 	@Override
 	public boolean isWrapperFor(Class<?> arg0) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return conn.isWrapperFor(arg0);
 	}
 
 	@Override
 	public <T> T unwrap(Class<T> arg0) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return conn.unwrap(arg0);
 	}
 
 	@Override
 	public void abort(Executor executor) throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
