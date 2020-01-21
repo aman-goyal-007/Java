@@ -2,7 +2,7 @@ import java.lang.reflect.Field;
 
 // Need to create deep cloning using this
 /*
-Deep clocning is not a good idea. Instead class should provide copy constructor if required.
+Deep cloning is not a good idea. Instead class should provide copy constructor if required.
  */
 
 public class DeepClone {
